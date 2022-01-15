@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace ElementPackageTask
 {
     public partial class Form1 : Form
@@ -35,9 +36,12 @@ namespace ElementPackageTask
         {
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             graphics = Graphics.FromImage(pictureBox1.Image);
-            Package package = new Package();
 
-            package.PackageStart();
+            InitialData elementSize = new InitialData(ElementSize.Text);
+            Package package = new Package();
+            //package.PackageStart();
+            package.PackageStart(elementSize.ElementSizeMatrix);
+
 
             foreach (var item in package.Elements)
             {
@@ -53,6 +57,13 @@ namespace ElementPackageTask
                 graphics.FillRectangle(brushForElement, (float)item.coordinate.x, (float)item.coordinate.y, (float)item.width, (float)item.height);
                 graphics.DrawString($"{index}", new Font("Arial", 7), brushForText, (float)(item.coordinate.x + item.width / 2 - Font.Size / 2), (float)(item.coordinate.y + item.height / 2 - Font.Height / 2));
             }
+        }
+
+        private void ElementSize_btn_Click(object sender, EventArgs e)
+        {
+            if (openSizeFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            ElementSize.Text = @openSizeFileDialog1.FileName;
         }
     }
 }

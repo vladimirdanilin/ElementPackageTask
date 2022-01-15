@@ -31,7 +31,11 @@ namespace ElementPackageTask
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ElementSize = new System.Windows.Forms.Label();
+            this.ElementSize_btn = new System.Windows.Forms.Button();
             this.Start_btn = new System.Windows.Forms.Button();
+            this.folderBrowserDialogXY = new System.Windows.Forms.FolderBrowserDialog();
+            this.openSizeFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -41,7 +45,9 @@ namespace ElementPackageTask
             // 
             // splitContainer1
             // 
+            this.splitContainer1.AllowDrop = true;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -51,6 +57,8 @@ namespace ElementPackageTask
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.ElementSize);
+            this.splitContainer1.Panel2.Controls.Add(this.ElementSize_btn);
             this.splitContainer1.Panel2.Controls.Add(this.Start_btn);
             this.splitContainer1.Size = new System.Drawing.Size(1111, 692);
             this.splitContainer1.SplitterDistance = 792;
@@ -64,6 +72,25 @@ namespace ElementPackageTask
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // ElementSize
+            // 
+            this.ElementSize.Location = new System.Drawing.Point(48, 602);
+            this.ElementSize.Name = "ElementSize";
+            this.ElementSize.Size = new System.Drawing.Size(149, 33);
+            this.ElementSize.TabIndex = 2;
+            this.ElementSize.Text = "Select path for elements\' sizes";
+            this.ElementSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ElementSize_btn
+            // 
+            this.ElementSize_btn.Location = new System.Drawing.Point(222, 602);
+            this.ElementSize_btn.Name = "ElementSize_btn";
+            this.ElementSize_btn.Size = new System.Drawing.Size(81, 33);
+            this.ElementSize_btn.TabIndex = 1;
+            this.ElementSize_btn.Text = "Browse";
+            this.ElementSize_btn.UseVisualStyleBackColor = true;
+            this.ElementSize_btn.Click += new System.EventHandler(this.ElementSize_btn_Click);
+            // 
             // Start_btn
             // 
             this.Start_btn.Location = new System.Drawing.Point(122, 643);
@@ -73,6 +100,10 @@ namespace ElementPackageTask
             this.Start_btn.Text = "Start";
             this.Start_btn.UseVisualStyleBackColor = true;
             this.Start_btn.Click += new System.EventHandler(this.Start_btn_Click);
+            // 
+            // openSizeFileDialog1
+            // 
+            this.openSizeFileDialog1.FileName = "openSizeFileDialog1";
             // 
             // Form1
             // 
@@ -96,5 +127,9 @@ namespace ElementPackageTask
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button Start_btn;
+        private System.Windows.Forms.Button ElementSize_btn;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogXY;
+        private System.Windows.Forms.Label ElementSize;
+        private System.Windows.Forms.OpenFileDialog openSizeFileDialog1;
     }
 }

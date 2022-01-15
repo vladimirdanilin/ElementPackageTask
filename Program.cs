@@ -9,6 +9,7 @@ namespace ElementPackageTask
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             //Package package = new Package();
