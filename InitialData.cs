@@ -9,7 +9,7 @@ namespace ElementPackageTask
 {
     public class InitialData
     {
-        public double[,] ElementSizeMatrix { get; set; }
+        public double[,] Matrix { get; set; }
         public string Path { get; set; }
         public InitialData(string path)
         {
@@ -19,18 +19,29 @@ namespace ElementPackageTask
         
         void GetElementSizes()
         {
-            
+            int lengthOfString;
             string[] strings = File.ReadAllLines(@Path);
-            ElementSizeMatrix = new double[strings.Length, 2];
+            lengthOfString = strings[0].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).Count();
+            Matrix = new double[strings.Length, lengthOfString];
             for (int i = 0; i < strings.Length; i++)
             {
                 double[] row = strings[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < lengthOfString; j++)
                 {
-                    ElementSizeMatrix[i, j] = row[j];
+                    Matrix[i, j] = row[j];
                 }
 
             }
+            for (int i = 0; i < strings.Length; i++)
+            {
+                for (int j = 0; j < lengthOfString; j++)
+                {
+                    Console.Write(Matrix[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
         }
+
+        
     }
 }

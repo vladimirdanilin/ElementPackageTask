@@ -31,11 +31,14 @@ namespace ElementPackageTask
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Adjacency_btn = new System.Windows.Forms.Button();
+            this.Adjacency = new System.Windows.Forms.Label();
             this.ElementSize = new System.Windows.Forms.Label();
             this.ElementSize_btn = new System.Windows.Forms.Button();
             this.Start_btn = new System.Windows.Forms.Button();
             this.folderBrowserDialogXY = new System.Windows.Forms.FolderBrowserDialog();
             this.openSizeFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openAdjacencyFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -57,6 +60,8 @@ namespace ElementPackageTask
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.Adjacency_btn);
+            this.splitContainer1.Panel2.Controls.Add(this.Adjacency);
             this.splitContainer1.Panel2.Controls.Add(this.ElementSize);
             this.splitContainer1.Panel2.Controls.Add(this.ElementSize_btn);
             this.splitContainer1.Panel2.Controls.Add(this.Start_btn);
@@ -66,11 +71,31 @@ namespace ElementPackageTask
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(789, 522);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // Adjacency_btn
+            // 
+            this.Adjacency_btn.Location = new System.Drawing.Point(222, 563);
+            this.Adjacency_btn.Name = "Adjacency_btn";
+            this.Adjacency_btn.Size = new System.Drawing.Size(81, 33);
+            this.Adjacency_btn.TabIndex = 4;
+            this.Adjacency_btn.Text = "Browse";
+            this.Adjacency_btn.UseVisualStyleBackColor = true;
+            this.Adjacency_btn.Click += new System.EventHandler(this.Adjacency_btn_Click);
+            // 
+            // Adjacency
+            // 
+            this.Adjacency.Location = new System.Drawing.Point(51, 563);
+            this.Adjacency.Name = "Adjacency";
+            this.Adjacency.Size = new System.Drawing.Size(146, 33);
+            this.Adjacency.TabIndex = 3;
+            this.Adjacency.Text = "Select path for adjacency matrix";
+            this.Adjacency.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ElementSize
             // 
@@ -105,6 +130,10 @@ namespace ElementPackageTask
             // 
             this.openSizeFileDialog1.FileName = "openSizeFileDialog1";
             // 
+            // openAdjacencyFileDialog1
+            // 
+            this.openAdjacencyFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,5 +160,8 @@ namespace ElementPackageTask
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogXY;
         private System.Windows.Forms.Label ElementSize;
         private System.Windows.Forms.OpenFileDialog openSizeFileDialog1;
+        private System.Windows.Forms.Label Adjacency;
+        private System.Windows.Forms.Button Adjacency_btn;
+        private System.Windows.Forms.OpenFileDialog openAdjacencyFileDialog1;
     }
 }

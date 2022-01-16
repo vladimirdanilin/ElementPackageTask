@@ -28,7 +28,7 @@ namespace ElementPackageTask
         }
 
         private double PCBWidth = 160;
-        private double PCBHeight = 260;
+        private double PCBHeight = 200;
         public List<Element> Elements;
         private Node root;
 
