@@ -20,6 +20,8 @@ namespace ElementPackageTask
         private double X;
         private double Y;
         Package package = new Package();
+        Bitmap bitmapForElements;
+
 
         Graphics graphics;
         Brush brushForElement;
@@ -35,10 +37,11 @@ namespace ElementPackageTask
         {
             DrawElements();
         }
-        //PictureBox pictureBox1 = new PictureBox();
-        private void DrawElements()
+
+        private void DrawElements() //Метод, рисющий элементы схемы
         {
-            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            bitmapForElements = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            pictureBox1.Image = bitmapForElements;
             graphics = Graphics.FromImage(pictureBox1.Image);
 
             InitialData elementSize = new InitialData(ElementSize.Text);
@@ -55,27 +58,9 @@ namespace ElementPackageTask
                 int index = package.Elements.FindIndex(x => x == item);
                 brushForElement = new SolidBrush(colorForElement);
                 brushForText = new SolidBrush(colorForText);
-                //graphics.DrawRectangle(pen, (float)item.coordinate.x, (float)item.coordinate.y, (float)item.width, (float)item.height);
                 graphics.FillRectangle(brushForElement, (float)item.coordinate.x, (float)item.coordinate.y, (float)item.width, (float)item.height);
                 graphics.DrawString($"{index}", new Font("Arial", 7), brushForText, (float)(item.coordinate.x + item.width / 2 - Font.Size / 2), (float)(item.coordinate.y + item.height / 2 - Font.Height / 2));
             }
-
-            
-
-
-            /*InitialData adjacency = new InitialData(Adjacency.Text);
-            for (int i = 0; i < Math.Sqrt(adjacency.Matrix.Length); i++)
-            {
-                for (int j = 0; j < Math.Sqrt(adjacency.Matrix.Length); j++)
-                {
-                    if ((adjacency.Matrix[i, j] != 0) && (i != j))
-                    {
-                        graphics.DrawLine(pen, (float)package.Elements[i].coordinate.x + (float)package.Elements[i].width/2, (float)package.Elements[i].coordinate.y + (float)package.Elements[i].height/2, (float)package.Elements[j].coordinate.x + (float)package.Elements[j].width/2, (float)package.Elements[j].coordinate.y + (float)package.Elements[j].height/2);
-                    }
-                }
-            }*/
-            //Console.WriteLine("\n" + adjacency.Matrix.Length);
-            //Console.WriteLine($"X = {X} Y = {Y}");
         }
 
         private void ElementSize_btn_Click(object sender, EventArgs e)
@@ -92,33 +77,26 @@ namespace ElementPackageTask
             Adjacency.Text = @openAdjacencyFileDialog1.FileName;
         }
 
-        
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e) //Метод, рисующий соединения элементов
         {
+            Bitmap finalImage = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            Bitmap bitmapForLines = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            graphics = Graphics.FromImage(bitmapForLines);
+
             var mouseEventArgs = e as MouseEventArgs;
             if (mouseEventArgs != null)
             {
                 X = mouseEventArgs.X;
                 Y = mouseEventArgs.Y;
             }
-
+            
             InitialData adjacency = new InitialData(Adjacency.Text);
-            for (int i = 0; i < Math.Sqrt(adjacency.Matrix.Length); i++)
-            {
-                for (int j = 0; j < Math.Sqrt(adjacency.Matrix.Length); j++)
-                {
-                    if ((adjacency.Matrix[i, j] != 0) && (i != j))
-                    {
-                        graphics.DrawLine(pen, (float)package.Elements[i].coordinate.x + (float)package.Elements[i].width / 2, (float)package.Elements[i].coordinate.y + (float)package.Elements[i].height / 2, (float)package.Elements[j].coordinate.x + (float)package.Elements[j].width / 2, (float)package.Elements[j].coordinate.y + (float)package.Elements[j].height / 2);
-                    }
-                }
-            }
-
-            /*foreach (var item in package.Elements)
+            
+            foreach (var item in package.Elements)
             {
                 int index = package.Elements.FindIndex(x => x == item);
-                InitialData adjacency = new InitialData(Adjacency.Text);
+                
                 if ((X > item.coordinate.x) && (X < item.coordinate.x + item.width) && (Y > item.coordinate.y) && (Y < item.coordinate.y + item.height))
                 {
 
@@ -131,9 +109,16 @@ namespace ElementPackageTask
                     }
 
                 }
-            }*/
-        }
-       
+            }
 
+            using (Graphics g = Graphics.FromImage(finalImage))
+            {               
+                    g.DrawImage(bitmapForElements, 0,0);
+                    g.DrawImage(bitmapForLines, 0,0);
+            }
+
+            pictureBox1.Image = finalImage;
+
+        }
     }
 }
