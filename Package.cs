@@ -8,145 +8,90 @@ namespace ElementPackageTask
 {
     public class Package
     {
-        public class Node 
-        {
-            public Node nodeRight;
-            public Node nodeBottom;
-            public double x;
-            public double y;
-            public double width;
-            public double height;
-            public bool isUsed;
-        }
-
-        public class Element
-        {
-            public double width;
-            public double height;
-            public double volume;
-            public Node coordinate;
-        }
-
-        private double PCBWidth = 160;
-        private double PCBHeight = 200;
-        public List<Element> Elements;
-        private Node root;
-
         public Package()
         {
 
         }
-        public void PackageStart(double[,] elementSize)
+        public class Node
+        {
+            public Node right;
+            public Node down;
+            public double x;
+            public double y;
+            public double width;
+            public double height;
+            public bool used;
+        }
+
+        public List<Element> Elements = new List<Element>();
+        public List<Element> ElementsExtra = new List<Element>(); //Хранит исходный порядок элементов
+
+        public class Element
+        {
+            public double height;
+            public double width;
+            public double area;
+            public Node position;
+        }
+
+        private Node rootNode;
+
+        public void PackageStart(double[,] elementSize, int[] sequenceOfElements, double containerWidth, double containerHeight)
         {
             Elements = new List<Element>();
 
-            for (int i = 0; i < elementSize.Length/2; i++)
+            for (int i = 0; i < elementSize.Length / 2; i++)
             {
                 Element element = new Element { width = elementSize[i, 0], height = elementSize[i, 1] };
+                element.area = element.width * element.height;
                 Elements.Add(element);
             }
 
-            #region inputdata
-            /*Element element1 = new Element { width = 6, height = 10 };
-            Element element2 = new Element { width = 6, height = 5 };
-            Element element3 = new Element { width = 6, height = 5 };
-            Element element4 = new Element { width = 6, height = 5 };
-            Element element5 = new Element { width = 4, height = 4 };
-            Element element6 = new Element { width = 2, height = 4 };
-            Element element7 = new Element { width = 6, height = 6 };
-            Element element8 = new Element { width = 6, height = 6 };
-            Element element9 = new Element { width = 6, height = 6 };*/
+            ElementsExtra.AddRange(Elements);
 
-
-
-
-
-            /*Element element0 = new Element { width = 50, height = 100 };
-            Element element1 = new Element { width = 60, height = 50 };
-            Element element2 = new Element { width = 45, height = 50 };
-            Element element3 = new Element { width = 30, height = 50 };
-            Element element4 = new Element { width = 10, height = 40 };
-            Element element5 = new Element { width = 15, height = 40 };
-            Element element6 = new Element { width = 45, height = 60 };
-            Element element7 = new Element { width = 80, height = 60 };
-            Element element8 = new Element { width = 15, height = 60 };
-            Element element9 = new Element { width = 45, height = 50 };
-            Element element10 = new Element { width = 30, height = 50 };
-            Element element11 = new Element { width = 10, height = 40 };
-            Element element12 = new Element { width = 15, height = 40 };
-            Element element13 = new Element { width = 45, height = 60 };
-            Element element14 = new Element { width = 80, height = 60 };
-            Element element15 = new Element { width = 15, height = 60 };
-
-            Elements.Add(element0);
-            Elements.Add(element1);
-            Elements.Add(element2);
-            Elements.Add(element3);
-            Elements.Add(element4);
-            Elements.Add(element5);
-            Elements.Add(element6);
-            Elements.Add(element7);
-            Elements.Add(element8);
-            Elements.Add(element9);
-            Elements.Add(element10);
-            Elements.Add(element11);
-            Elements.Add(element12);
-            Elements.Add(element13);
-            Elements.Add(element14);
-            Elements.Add(element15);*/
-            #endregion
-
-
-            Elements.ForEach(item => item.volume = (item.width * item.height));
-            Elements = Elements.OrderByDescending(item => item.volume).ToList();
-
-            root = new Node { height = PCBHeight, width = PCBWidth };
-
-            MakePackage();
-            //PrintResult();
-            //Console.ReadLine();
-        }
-
-        private void PrintResult()
-        {
-            foreach (var item in Elements)
+            for (int i = 0; i < sequenceOfElements.Length; i++)
             {
-                var x = item.coordinate.x.ToString();
-                var y = item.coordinate.y.ToString();
-
-                Console.WriteLine("Height : " + item.height + " Width : " + item.width + " Pos_x  : " + x + " Pos_y : " + y);
+                Elements[i] = ElementsExtra[sequenceOfElements[i]];
             }
+
+            Pack(containerWidth, containerHeight);
         }
 
-        private void MakePackage()
+        public void Pack(double containerWidth, double containerHeight)
         {
-            foreach (var item in Elements)
-            { 
-            var node = FindNode(root, item.width, item.height);
+            //boxes = boxes.OrderByDescending(x => x.area).ToList();
+            rootNode = new Node { width = containerWidth, height = containerHeight };
+
+            foreach (var element in Elements)
+            {
+                var node = FindNode(rootNode, element.width, element.height);
                 if (node != null)
                 {
-                    // Split rectangles
-                    item.coordinate = BorderNode(node, item.width, item.height);
+                    element.position = SplitNode(node, element.width, element.height);
+                }
+                else
+                {
+                    element.position = GrowNode(element.width, element.height);
                 }
             }
         }
 
-        private Node FindNode(Node root, double width, double height)
+        private Node FindNode(Node rootNode, double width, double height)
         {
-            if (root.isUsed)
+            if (rootNode.used)
             {
-                var nextNode = FindNode(root.nodeBottom, width, height);
+                var nextNode = FindNode(rootNode.right, width, height);
 
                 if (nextNode == null)
                 {
-                    nextNode = FindNode(root.nodeRight, width, height);
+                    nextNode = FindNode(rootNode.down, width, height);
                 }
 
                 return nextNode;
             }
-            else if (width <= root.width && height <= root.height)
+            else if (width <= rootNode.width && height <= rootNode.height)
             {
-                return root;
+                return rootNode;
             }
             else
             {
@@ -154,13 +99,104 @@ namespace ElementPackageTask
             }
         }
 
-        private Node BorderNode(Node node, double width, double height)
+        private Node SplitNode(Node node, double width, double height)
         {
-            node.isUsed = true;
-            node.nodeBottom = new Node { y = node.y, x = node.x + width, height = node.height, width = node.width - width };
-            node.nodeRight = new Node { y = node.y + height, x = node.x, height = node.height - height, width = width };
-            return node;
 
+            node.used = true;
+            node.down = new Node { x = node.x, y = node.y + height, width = node.width, height = node.height - height };
+            node.right = new Node { x = node.x + width, y = node.y, width = node.width - width, height = height };
+            return node;
+        }
+
+        private Node GrowNode(double width, double height)
+        {
+            bool canGrowDown = (height <= rootNode.height);
+            bool canGrowRight = (width <= rootNode.width);
+
+            bool shouldGrowRight = canGrowRight && (rootNode.width >= (rootNode.width + width));
+            bool shouldGrowDown = canGrowDown && (rootNode.height >= (rootNode.height + height));
+
+            if (shouldGrowRight)
+            {
+
+                return growRight(width, height);
+            }
+            else if (shouldGrowDown)
+            {
+
+                return growDown(width, height);
+            }
+            else if (canGrowRight)
+            {
+
+                return growRight(width, height);
+            }
+            else if (canGrowDown)
+            {
+
+                return growDown(width, height);
+            }
+            else
+            {
+
+                return null;
+            }
+        }
+
+        private Node growRight(double width, double height)
+        {
+            rootNode = new Node()
+            {
+                used = true,
+                x = 0,
+                y = 0,
+                width = rootNode.width + width,
+                height = rootNode.height,
+                down = rootNode,
+                right = new Node() { x = rootNode.width, y = 0, width = width, height = rootNode.height }
+            };
+
+            Node node = FindNode(rootNode, width, height);
+            if (node != null)
+            {
+                return SplitNode(node, width, height);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private Node growDown(double width, double height)
+        {
+            rootNode = new Node()
+            {
+                used = true,
+                x = 0,
+                y = 0,
+                width = rootNode.width,
+                height = rootNode.height + height,
+                down = new Node() { x = 0, y = rootNode.height, width = rootNode.width, height = height },
+                right = rootNode
+            };
+            Node node = FindNode(rootNode, width, height);
+            if (node != null)
+            {
+                return SplitNode(node, width, height);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void PrintList(List<Element> list, string text)
+        {
+            Console.WriteLine(text);
+            foreach (var item in list)
+            {
+                Console.WriteLine($"W = {item.width} H = {item.height} X = {item.position.x} Y = {item.position.y}");
+            }
         }
     }
 }
