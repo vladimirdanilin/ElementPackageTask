@@ -19,6 +19,9 @@ namespace ElementPackageTask
         }
         private double X;
         private double Y;
+        public int NumOfSpecies = 5; // Default
+        public double PCBWidth = 150; // Default
+        public double PCBHeight = 350; // Default
         Package package;
         Fitness fitness = new Fitness();
         InitialData adjacency;
@@ -47,10 +50,11 @@ namespace ElementPackageTask
 
         private void Start_btn_Click(object sender, EventArgs e)
         {
+            
             elementSize = new InitialData(ElementSize.Text);
             FitnessStagnation();
             package = new Package();
-            package.PackageStart(elementSize.Matrix, BestSpecies[BestSpecies.Count-1].Genes, 150, 330);
+            package.PackageStart(elementSize.Matrix, BestSpecies[BestSpecies.Count-1].Genes, PCBWidth, PCBHeight);
             DrawElements();
         }
 
@@ -58,7 +62,8 @@ namespace ElementPackageTask
         {
             int n = 0;
             bool Stagnation = false;
-            Population population = new Population(50);
+
+            Population population = new Population(NumOfSpecies);
             ListOfparentalSpecies = new List<Chromosome>();
             ListOfparentalSpecies = population.GenerateInitialPopulation(elementSize.Matrix.Length / 2, ListOfparentalSpecies);
             //BestSpecies.Add(ListOfSpeciesSORTED[0]);
@@ -133,7 +138,7 @@ namespace ElementPackageTask
             foreach (var item in ListOfSpeciesUNITED)
             {
                 package = new Package();
-                package.PackageStart(elementSize.Matrix, item.Genes, 150, 370);
+                package.PackageStart(elementSize.Matrix, item.Genes, PCBWidth, PCBHeight);
                 item.Fitness = fitness.Count(package.ElementsExtra, adjacencyExtra.Matrix);
             }
         }
@@ -232,6 +237,33 @@ namespace ElementPackageTask
                 }
                 Console.Write($" FITNESS = {item.Fitness}");
                 Console.WriteLine();
+            }
+        }
+
+        private void NumSpecies_TextChanged(object sender, EventArgs e)
+        {
+            int numOfSpecies;
+            if (int.TryParse(NumSpecies.Text, out numOfSpecies))
+            {
+                NumOfSpecies = numOfSpecies;
+            }
+        }
+
+        private void PCBwidth_TextChanged(object sender, EventArgs e)
+        {
+            double pcbWidth;
+            if (double.TryParse(PCBwidth.Text, out pcbWidth))
+            {
+                PCBWidth = pcbWidth;
+            }
+        }
+
+        private void PCBheight_TextChanged(object sender, EventArgs e)
+        {
+            double pcbHeight;
+            if (double.TryParse(PCBheight.Text, out pcbHeight))
+            {
+                PCBHeight = pcbHeight;
             }
         }
     }

@@ -31,6 +31,12 @@ namespace ElementPackageTask
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PCBh = new System.Windows.Forms.Label();
+            this.PCBw = new System.Windows.Forms.Label();
+            this.PCBheight = new System.Windows.Forms.TextBox();
+            this.PCBwidth = new System.Windows.Forms.TextBox();
+            this.NumSpecies = new System.Windows.Forms.TextBox();
+            this.NumOfSpeciesLabel = new System.Windows.Forms.Label();
             this.Adjacency_btn = new System.Windows.Forms.Button();
             this.Adjacency = new System.Windows.Forms.Label();
             this.ElementSize = new System.Windows.Forms.Label();
@@ -60,6 +66,12 @@ namespace ElementPackageTask
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.PCBh);
+            this.splitContainer1.Panel2.Controls.Add(this.PCBw);
+            this.splitContainer1.Panel2.Controls.Add(this.PCBheight);
+            this.splitContainer1.Panel2.Controls.Add(this.PCBwidth);
+            this.splitContainer1.Panel2.Controls.Add(this.NumSpecies);
+            this.splitContainer1.Panel2.Controls.Add(this.NumOfSpeciesLabel);
             this.splitContainer1.Panel2.Controls.Add(this.Adjacency_btn);
             this.splitContainer1.Panel2.Controls.Add(this.Adjacency);
             this.splitContainer1.Panel2.Controls.Add(this.ElementSize);
@@ -78,6 +90,57 @@ namespace ElementPackageTask
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // PCBh
+            // 
+            this.PCBh.Location = new System.Drawing.Point(161, 69);
+            this.PCBh.Name = "PCBh";
+            this.PCBh.Size = new System.Drawing.Size(55, 34);
+            this.PCBh.TabIndex = 9;
+            this.PCBh.Text = "Высота платы";
+            this.PCBh.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PCBw
+            // 
+            this.PCBw.Location = new System.Drawing.Point(3, 69);
+            this.PCBw.Name = "PCBw";
+            this.PCBw.Size = new System.Drawing.Size(74, 34);
+            this.PCBw.TabIndex = 0;
+            this.PCBw.Text = "Ширина платы";
+            this.PCBw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PCBheight
+            // 
+            this.PCBheight.Location = new System.Drawing.Point(222, 77);
+            this.PCBheight.Name = "PCBheight";
+            this.PCBheight.Size = new System.Drawing.Size(62, 20);
+            this.PCBheight.TabIndex = 8;
+            this.PCBheight.TextChanged += new System.EventHandler(this.PCBheight_TextChanged);
+            // 
+            // PCBwidth
+            // 
+            this.PCBwidth.Location = new System.Drawing.Point(83, 77);
+            this.PCBwidth.Name = "PCBwidth";
+            this.PCBwidth.Size = new System.Drawing.Size(62, 20);
+            this.PCBwidth.TabIndex = 7;
+            this.PCBwidth.TextChanged += new System.EventHandler(this.PCBwidth_TextChanged);
+            // 
+            // NumSpecies
+            // 
+            this.NumSpecies.Location = new System.Drawing.Point(222, 36);
+            this.NumSpecies.Name = "NumSpecies";
+            this.NumSpecies.Size = new System.Drawing.Size(68, 20);
+            this.NumSpecies.TabIndex = 6;
+            this.NumSpecies.TextChanged += new System.EventHandler(this.NumSpecies_TextChanged);
+            // 
+            // NumOfSpeciesLabel
+            // 
+            this.NumOfSpeciesLabel.AutoSize = true;
+            this.NumOfSpeciesLabel.Location = new System.Drawing.Point(48, 39);
+            this.NumOfSpeciesLabel.Name = "NumOfSpeciesLabel";
+            this.NumOfSpeciesLabel.Size = new System.Drawing.Size(149, 13);
+            this.NumOfSpeciesLabel.TabIndex = 5;
+            this.NumOfSpeciesLabel.Text = "Введите количество особей";
+            // 
             // Adjacency_btn
             // 
             this.Adjacency_btn.Location = new System.Drawing.Point(222, 563);
@@ -94,7 +157,7 @@ namespace ElementPackageTask
             this.Adjacency.Name = "Adjacency";
             this.Adjacency.Size = new System.Drawing.Size(146, 33);
             this.Adjacency.TabIndex = 3;
-            this.Adjacency.Text = "Select path for adjacency matrix";
+            this.Adjacency.Text = "Выберите адрес матрицы смежности";
             this.Adjacency.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ElementSize
@@ -103,7 +166,7 @@ namespace ElementPackageTask
             this.ElementSize.Name = "ElementSize";
             this.ElementSize.Size = new System.Drawing.Size(149, 33);
             this.ElementSize.TabIndex = 2;
-            this.ElementSize.Text = "Select path for elements\' sizes";
+            this.ElementSize.Text = "Выберите путь матрицы размеров";
             this.ElementSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ElementSize_btn
@@ -144,6 +207,7 @@ namespace ElementPackageTask
             this.Text = "Form1";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -163,5 +227,11 @@ namespace ElementPackageTask
         private System.Windows.Forms.Label Adjacency;
         private System.Windows.Forms.Button Adjacency_btn;
         private System.Windows.Forms.OpenFileDialog openAdjacencyFileDialog1;
+        private System.Windows.Forms.TextBox NumSpecies;
+        private System.Windows.Forms.Label NumOfSpeciesLabel;
+        private System.Windows.Forms.TextBox PCBheight;
+        private System.Windows.Forms.TextBox PCBwidth;
+        private System.Windows.Forms.Label PCBh;
+        private System.Windows.Forms.Label PCBw;
     }
 }
