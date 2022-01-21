@@ -20,14 +20,16 @@ namespace ElementPackageTask
         private double X;
         private double Y;
         public int NumOfSpecies = 5; // Default
-        public double PCBWidth = 150; // Default
-        public double PCBHeight = 350; // Default
+        public int MaxNumOfGenerations = 1; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
+        public int Mutation = 50; // Default процент мутации
+        public double PCBWidth = 150; // Default ширина платы
+        public double PCBHeight = 350; // Default высота платы
+        int k; //Кол-во поколений, на котором работа программы останавливается
         Package package;
         Fitness fitness = new Fitness();
         InitialData adjacency;
 
         InitialData elementSize;
-        int MaxNumOfGenerations = 1;
 
         Bitmap bitmapForElements;
 
@@ -50,7 +52,7 @@ namespace ElementPackageTask
 
         private void Start_btn_Click(object sender, EventArgs e)
         {
-            
+            ProgramResultLabel.Text = "";
             elementSize = new InitialData(ElementSize.Text);
             FitnessStagnation();
             package = new Package();
@@ -58,7 +60,7 @@ namespace ElementPackageTask
             DrawElements();
         }
 
-        void FitnessStagnation()
+        void FitnessStagnation() //Неизменность F на протяжении опр-го числа поколений
         {
             int n = 0;
             bool Stagnation = false;
@@ -71,6 +73,7 @@ namespace ElementPackageTask
             PrintListOfSpecies(ListOfOffspringSpeciesMutated, "ListOfOffspringSpeciesMutated");
             while (Stagnation != true)
             {
+                k++;
                 List<Chromosome> TestList = new List<Chromosome>();
                 GenerateNewGeneration(population);
                 PrintListOfSpecies(ListOfparentalSpecies, "ListOfPARENTAL");
@@ -113,10 +116,26 @@ namespace ElementPackageTask
                     n = 0;
                 }
 
+                if (k == 500) // ?????????????????
+                {
+                    Stagnation = true;
+                }
+
 
 
             }
             //BestSpecies = BestSpecies.OrderBy(x => x.Fitness).ToList();
+
+            foreach (var gene in BestSpecies[BestSpecies.Count-1].Genes)
+            {
+                ProgramResultLabel.Text += gene;
+                ProgramResultLabel.Text += " ";
+            }
+            ProgramResultLabel.Text += "\t FITNESS = ";
+            ProgramResultLabel.Text += BestSpecies[BestSpecies.Count - 1].Fitness;
+
+
+
             PrintListOfSpecies(BestSpecies, "BEST SPECIES");
         }
 
@@ -141,7 +160,7 @@ namespace ElementPackageTask
                 package.PackageStart(elementSize.Matrix, item.Genes, PCBWidth, PCBHeight);
                 item.Fitness = fitness.Count(package.ElementsExtra, adjacencyExtra.Matrix);
             }
-        }
+        } //Метод, создающий новое поколение (без генерации начального поколения)
 
 
         private void DrawElements() //Метод, рисющий элементы схемы
@@ -172,14 +191,14 @@ namespace ElementPackageTask
             if (openSizeFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
             ElementSize.Text = @openSizeFileDialog1.FileName;
-        }
+        } //Ввод матрицы размеров элементов с формы
 
         private void Adjacency_btn_Click(object sender, EventArgs e)
         {
             if (openAdjacencyFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
             Adjacency.Text = @openAdjacencyFileDialog1.FileName;
-        }
+        } //Ввод матрицы смежности с формы
 
 
         private void pictureBox1_Click(object sender, EventArgs e) //Метод, рисующий соединения элементов
@@ -247,7 +266,7 @@ namespace ElementPackageTask
             {
                 NumOfSpecies = numOfSpecies;
             }
-        }
+        } //Ввод кол-ва поколений с формы
 
         private void PCBwidth_TextChanged(object sender, EventArgs e)
         {
@@ -256,7 +275,7 @@ namespace ElementPackageTask
             {
                 PCBWidth = pcbWidth;
             }
-        }
+        } //Ввод ширины платы с формы
 
         private void PCBheight_TextChanged(object sender, EventArgs e)
         {
@@ -265,6 +284,24 @@ namespace ElementPackageTask
             {
                 PCBHeight = pcbHeight;
             }
-        }
+        } //Ввод высоты платы с формы
+
+        private void NumOfGConst_TextChanged(object sender, EventArgs e)
+        {
+            int mnumOfGenerations;
+            if (int.TryParse(NumOfGConst.Text, out mnumOfGenerations))
+            {
+                MaxNumOfGenerations = mnumOfGenerations;
+            }
+        } //Ввод кол-ва поколений с формы, на протяжении которого F неизменно
+
+        private void MutationPercent_TextChanged(object sender, EventArgs e)
+        {
+            int mutation;
+            if (int.TryParse(MutationPercent.Text, out mutation))
+            {
+                Mutation = mutation;
+            }
+        } //Ввод процента мутации
     }
 }

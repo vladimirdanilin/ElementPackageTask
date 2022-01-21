@@ -31,6 +31,8 @@ namespace ElementPackageTask
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.NumOfGenerationsl = new System.Windows.Forms.Label();
+            this.NumOfGConst = new System.Windows.Forms.TextBox();
             this.PCBh = new System.Windows.Forms.Label();
             this.PCBw = new System.Windows.Forms.Label();
             this.PCBheight = new System.Windows.Forms.TextBox();
@@ -45,6 +47,9 @@ namespace ElementPackageTask
             this.folderBrowserDialogXY = new System.Windows.Forms.FolderBrowserDialog();
             this.openSizeFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openAdjacencyFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.MutationLabel = new System.Windows.Forms.Label();
+            this.MutationPercent = new System.Windows.Forms.TextBox();
+            this.ProgramResultLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -62,10 +67,15 @@ namespace ElementPackageTask
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.ProgramResultLabel);
             this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.MutationPercent);
+            this.splitContainer1.Panel2.Controls.Add(this.MutationLabel);
+            this.splitContainer1.Panel2.Controls.Add(this.NumOfGenerationsl);
+            this.splitContainer1.Panel2.Controls.Add(this.NumOfGConst);
             this.splitContainer1.Panel2.Controls.Add(this.PCBh);
             this.splitContainer1.Panel2.Controls.Add(this.PCBw);
             this.splitContainer1.Panel2.Controls.Add(this.PCBheight);
@@ -89,6 +99,23 @@ namespace ElementPackageTask
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // NumOfGenerationsl
+            // 
+            this.NumOfGenerationsl.Location = new System.Drawing.Point(10, 104);
+            this.NumOfGenerationsl.Name = "NumOfGenerationsl";
+            this.NumOfGenerationsl.Size = new System.Drawing.Size(206, 48);
+            this.NumOfGenerationsl.TabIndex = 11;
+            this.NumOfGenerationsl.Text = "Введите кол-во поколений, на протяжении которого F неизменно";
+            this.NumOfGenerationsl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // NumOfGConst
+            // 
+            this.NumOfGConst.Location = new System.Drawing.Point(222, 119);
+            this.NumOfGConst.Name = "NumOfGConst";
+            this.NumOfGConst.Size = new System.Drawing.Size(62, 20);
+            this.NumOfGConst.TabIndex = 10;
+            this.NumOfGConst.TextChanged += new System.EventHandler(this.NumOfGConst_TextChanged);
             // 
             // PCBh
             // 
@@ -128,7 +155,7 @@ namespace ElementPackageTask
             // 
             this.NumSpecies.Location = new System.Drawing.Point(222, 36);
             this.NumSpecies.Name = "NumSpecies";
-            this.NumSpecies.Size = new System.Drawing.Size(68, 20);
+            this.NumSpecies.Size = new System.Drawing.Size(62, 20);
             this.NumSpecies.TabIndex = 6;
             this.NumSpecies.TextChanged += new System.EventHandler(this.NumSpecies_TextChanged);
             // 
@@ -197,6 +224,32 @@ namespace ElementPackageTask
             // 
             this.openAdjacencyFileDialog1.FileName = "openFileDialog1";
             // 
+            // MutationLabel
+            // 
+            this.MutationLabel.Location = new System.Drawing.Point(48, 162);
+            this.MutationLabel.Name = "MutationLabel";
+            this.MutationLabel.Size = new System.Drawing.Size(145, 27);
+            this.MutationLabel.TabIndex = 12;
+            this.MutationLabel.Text = "Введите процент мутаций";
+            this.MutationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // MutationPercent
+            // 
+            this.MutationPercent.Location = new System.Drawing.Point(222, 166);
+            this.MutationPercent.Name = "MutationPercent";
+            this.MutationPercent.Size = new System.Drawing.Size(62, 20);
+            this.MutationPercent.TabIndex = 13;
+            this.MutationPercent.TextChanged += new System.EventHandler(this.MutationPercent_TextChanged);
+            // 
+            // ProgramResultLabel
+            // 
+            this.ProgramResultLabel.AutoSize = true;
+            this.ProgramResultLabel.Location = new System.Drawing.Point(26, 602);
+            this.ProgramResultLabel.Name = "ProgramResultLabel";
+            this.ProgramResultLabel.Size = new System.Drawing.Size(0, 13);
+            this.ProgramResultLabel.TabIndex = 1;
+            this.ProgramResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -206,6 +259,7 @@ namespace ElementPackageTask
             this.Name = "Form1";
             this.Text = "Form1";
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -233,5 +287,10 @@ namespace ElementPackageTask
         private System.Windows.Forms.TextBox PCBwidth;
         private System.Windows.Forms.Label PCBh;
         private System.Windows.Forms.Label PCBw;
+        private System.Windows.Forms.Label NumOfGenerationsl;
+        private System.Windows.Forms.TextBox NumOfGConst;
+        private System.Windows.Forms.TextBox MutationPercent;
+        private System.Windows.Forms.Label MutationLabel;
+        private System.Windows.Forms.Label ProgramResultLabel;
     }
 }
