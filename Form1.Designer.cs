@@ -30,7 +30,10 @@ namespace ElementPackageTask
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ProgramResultLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.MutationPercent = new System.Windows.Forms.TextBox();
+            this.MutationLabel = new System.Windows.Forms.Label();
             this.NumOfGenerationsl = new System.Windows.Forms.Label();
             this.NumOfGConst = new System.Windows.Forms.TextBox();
             this.PCBh = new System.Windows.Forms.Label();
@@ -47,9 +50,9 @@ namespace ElementPackageTask
             this.folderBrowserDialogXY = new System.Windows.Forms.FolderBrowserDialog();
             this.openSizeFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openAdjacencyFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.MutationLabel = new System.Windows.Forms.Label();
-            this.MutationPercent = new System.Windows.Forms.TextBox();
-            this.ProgramResultLabel = new System.Windows.Forms.Label();
+            this.Save = new System.Windows.Forms.Label();
+            this.Save_btn = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -72,6 +75,8 @@ namespace ElementPackageTask
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.Save_btn);
+            this.splitContainer1.Panel2.Controls.Add(this.Save);
             this.splitContainer1.Panel2.Controls.Add(this.MutationPercent);
             this.splitContainer1.Panel2.Controls.Add(this.MutationLabel);
             this.splitContainer1.Panel2.Controls.Add(this.NumOfGenerationsl);
@@ -91,6 +96,15 @@ namespace ElementPackageTask
             this.splitContainer1.SplitterDistance = 792;
             this.splitContainer1.TabIndex = 0;
             // 
+            // ProgramResultLabel
+            // 
+            this.ProgramResultLabel.AutoSize = true;
+            this.ProgramResultLabel.Location = new System.Drawing.Point(26, 602);
+            this.ProgramResultLabel.Name = "ProgramResultLabel";
+            this.ProgramResultLabel.Size = new System.Drawing.Size(0, 13);
+            this.ProgramResultLabel.TabIndex = 1;
+            this.ProgramResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
@@ -99,6 +113,23 @@ namespace ElementPackageTask
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // MutationPercent
+            // 
+            this.MutationPercent.Location = new System.Drawing.Point(222, 166);
+            this.MutationPercent.Name = "MutationPercent";
+            this.MutationPercent.Size = new System.Drawing.Size(62, 20);
+            this.MutationPercent.TabIndex = 13;
+            this.MutationPercent.TextChanged += new System.EventHandler(this.MutationPercent_TextChanged);
+            // 
+            // MutationLabel
+            // 
+            this.MutationLabel.Location = new System.Drawing.Point(48, 162);
+            this.MutationLabel.Name = "MutationLabel";
+            this.MutationLabel.Size = new System.Drawing.Size(145, 27);
+            this.MutationLabel.TabIndex = 12;
+            this.MutationLabel.Text = "Введите процент мутаций";
+            this.MutationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // NumOfGenerationsl
             // 
@@ -184,7 +215,7 @@ namespace ElementPackageTask
             this.Adjacency.Name = "Adjacency";
             this.Adjacency.Size = new System.Drawing.Size(146, 33);
             this.Adjacency.TabIndex = 3;
-            this.Adjacency.Text = "Выберите адрес матрицы смежности";
+            this.Adjacency.Text = "Выберите путь матрицы смежности";
             this.Adjacency.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ElementSize
@@ -224,31 +255,24 @@ namespace ElementPackageTask
             // 
             this.openAdjacencyFileDialog1.FileName = "openFileDialog1";
             // 
-            // MutationLabel
+            // Save
             // 
-            this.MutationLabel.Location = new System.Drawing.Point(48, 162);
-            this.MutationLabel.Name = "MutationLabel";
-            this.MutationLabel.Size = new System.Drawing.Size(145, 27);
-            this.MutationLabel.TabIndex = 12;
-            this.MutationLabel.Text = "Введите процент мутаций";
-            this.MutationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Save.Location = new System.Drawing.Point(51, 489);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(146, 33);
+            this.Save.TabIndex = 14;
+            this.Save.Text = "Выберите путь сохранения файла";
+            this.Save.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // MutationPercent
+            // Save_btn
             // 
-            this.MutationPercent.Location = new System.Drawing.Point(222, 166);
-            this.MutationPercent.Name = "MutationPercent";
-            this.MutationPercent.Size = new System.Drawing.Size(62, 20);
-            this.MutationPercent.TabIndex = 13;
-            this.MutationPercent.TextChanged += new System.EventHandler(this.MutationPercent_TextChanged);
-            // 
-            // ProgramResultLabel
-            // 
-            this.ProgramResultLabel.AutoSize = true;
-            this.ProgramResultLabel.Location = new System.Drawing.Point(26, 602);
-            this.ProgramResultLabel.Name = "ProgramResultLabel";
-            this.ProgramResultLabel.Size = new System.Drawing.Size(0, 13);
-            this.ProgramResultLabel.TabIndex = 1;
-            this.ProgramResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Save_btn.Location = new System.Drawing.Point(222, 489);
+            this.Save_btn.Name = "Save_btn";
+            this.Save_btn.Size = new System.Drawing.Size(81, 33);
+            this.Save_btn.TabIndex = 15;
+            this.Save_btn.Text = "Browse";
+            this.Save_btn.UseVisualStyleBackColor = true;
+            this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
             // 
             // Form1
             // 
@@ -292,5 +316,8 @@ namespace ElementPackageTask
         private System.Windows.Forms.TextBox MutationPercent;
         private System.Windows.Forms.Label MutationLabel;
         private System.Windows.Forms.Label ProgramResultLabel;
+        private System.Windows.Forms.Button Save_btn;
+        private System.Windows.Forms.Label Save;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,12 @@ namespace ElementPackageTask
         }
         private double X;
         private double Y;
-        public int NumOfSpecies = 5; // Default
-        public int MaxNumOfGenerations = 1; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
-        public int Mutation = 100; // Default процент мутации
-        public double PCBWidth = 150; // Default ширина платы
-        public double PCBHeight = 350; // Default высота платы
-        int k; //Кол-во поколений, на котором работа программы останавливается
+        private int NumOfSpecies = 30; // Default
+        private int MaxNumOfGenerations = 1; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
+        private int Mutation = 100; // Default процент мутации
+        private double PCBWidth = 200; // Default ширина платы
+        private double PCBHeight = 300; // Default высота платы
+        private int k; //Кол-во поколений, на котором работа программы останавливается
         Package package;
         Fitness fitness = new Fitness();
         InitialData adjacency;
@@ -58,6 +59,7 @@ namespace ElementPackageTask
             package = new Package();
             package.PackageStart(elementSize.Matrix, BestSpecies[BestSpecies.Count-1].Genes, PCBWidth, PCBHeight);
             DrawElements();
+            SaveResult();
         }
 
         void FitnessStagnation() //Неизменность F на протяжении опр-го числа поколений
@@ -125,14 +127,17 @@ namespace ElementPackageTask
 
             }
             //BestSpecies = BestSpecies.OrderBy(x => x.Fitness).ToList();
-
-            foreach (var gene in BestSpecies[BestSpecies.Count-1].Genes)
+            for (int i = BestSpecies.Count - 1; i >= BestSpecies.Count - MaxNumOfGenerations; i--)
             {
-                ProgramResultLabel.Text += gene;
-                ProgramResultLabel.Text += " ";
+                ProgramResultLabel.Text += "\n";
+                foreach (var gene in BestSpecies[BestSpecies.Count - 1].Genes)
+                {
+                    ProgramResultLabel.Text += gene;
+                    ProgramResultLabel.Text += " ";
+                }
+                ProgramResultLabel.Text += "\t FITNESS = ";
+                ProgramResultLabel.Text += BestSpecies[i].Fitness;
             }
-            ProgramResultLabel.Text += "\t FITNESS = ";
-            ProgramResultLabel.Text += BestSpecies[BestSpecies.Count - 1].Fitness;
 
 
 
@@ -183,7 +188,6 @@ namespace ElementPackageTask
                 graphics.DrawString($"{index}", new Font("Arial", 7), brushForText, (float)(item.position.x + item.width / 2 - Font.Size / 2), (float)(item.position.y + item.height / 2 - Font.Height / 2));
             }
 
-            //Fitness(x,y,width,height)
         }
 
         private void ElementSize_btn_Click(object sender, EventArgs e)
@@ -303,5 +307,34 @@ namespace ElementPackageTask
                 Mutation = mutation;
             }
         } //Ввод процента мутации
+
+        private void Save_btn_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            Save.Text = @folderBrowserDialog1.SelectedPath;
+        } //Выбор пути сохранения результата
+
+        private void SaveResult()
+        {
+            if (Save.Text != "Выберите путь сохранения файла")
+            {
+                string path = string.Concat(Save.Text, "\\Result.txt");
+                using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default))
+                {
+
+                    foreach (var item in package.ElementsExtra)
+                    {
+                        sw.WriteLine($"Width = {item.width} Height = {item.height} X = {item.position.x} Y = {item.position.y}");
+                        sw.WriteLine($"DOWN x = {item.position.down.x} y = {item.position.down.y} width = {item.position.down.width} height = {item.position.down.height}");
+                        sw.WriteLine($"RIGHT x = {item.position.right.x} y = {item.position.right.y} width = {item.position.right.width} height = {item.position.right.height}");
+                        sw.WriteLine();
+                    }
+                    sw.WriteLine($"{ProgramResultLabel.Text}");
+
+
+                }
+            }
+        } //Сохранение 
     }
 }

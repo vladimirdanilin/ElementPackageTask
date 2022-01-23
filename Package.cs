@@ -64,10 +64,10 @@ namespace ElementPackageTask
 
             foreach (var element in Elements)
             {
-                var node = FindNode(rootNode, element.width, element.height);
+                var node = FindNode(rootNode, element.width, element.height); //Проверяем, можно ли в rootNode вместить элемент
                 if (node != null)
                 {
-                    element.position = SplitNode(node, element.width, element.height);
+                    element.position = SplitNode(node, element.width, element.height); //Определение свободного пространства для последующего размещения элементов
                 }
                 else
                 {
@@ -99,12 +99,12 @@ namespace ElementPackageTask
             }
         }
 
-        private Node SplitNode(Node node, double width, double height)
+        private Node SplitNode(Node node, double ewidth, double eheight)
         {
 
             node.used = true;
-            node.down = new Node { x = node.x, y = node.y + height, width = node.width, height = node.height - height };
-            node.right = new Node { x = node.x + width, y = node.y, width = node.width - width, height = height };
+            node.down = new Node { x = node.x, y = node.y + eheight, width = node.width, height = node.height - eheight };
+            node.right = new Node { x = node.x + ewidth, y = node.y, width = node.width - ewidth, height = eheight };
             return node;
         }
 
