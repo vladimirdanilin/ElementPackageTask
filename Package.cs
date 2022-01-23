@@ -57,34 +57,34 @@ namespace ElementPackageTask
             Pack(containerWidth, containerHeight);
         }
 
-        public void Pack(double containerWidth, double containerHeight)
+        private void Pack(double containerWidth, double containerHeight)
         {
             //boxes = boxes.OrderByDescending(x => x.area).ToList();
             rootNode = new Node { width = containerWidth, height = containerHeight };
 
             foreach (var element in Elements)
             {
-                var node = FindNode(rootNode, element.width, element.height); //Проверяем, можно ли в rootNode вместить элемент
+                var node = SearchForNode(rootNode, element.width, element.height); //Проверяем, можно ли в rootNode вместить элемент
                 if (node != null)
                 {
-                    element.position = SplitNode(node, element.width, element.height); //Определение свободного пространства для последующего размещения элементов
+                    element.position = GetSpace(node, element.width, element.height); //Определение свободного пространства для последующего размещения элементов
                 }
                 else
                 {
-                    element.position = GrowNode(element.width, element.height);
+                    element.position = Grow(element.width, element.height);
                 }
             }
         }
 
-        private Node FindNode(Node rootNode, double width, double height)
+        private Node SearchForNode(Node rootNode, double width, double height)
         {
             if (rootNode.used)
             {
-                var nextNode = FindNode(rootNode.right, width, height);
+                var nextNode = SearchForNode(rootNode.right, width, height);
 
                 if (nextNode == null)
                 {
-                    nextNode = FindNode(rootNode.down, width, height);
+                    nextNode = SearchForNode(rootNode.down, width, height);
                 }
 
                 return nextNode;
@@ -99,42 +99,41 @@ namespace ElementPackageTask
             }
         }
 
-        private Node SplitNode(Node node, double ewidth, double eheight)
+        private Node GetSpace(Node thisNode, double ewidth, double eheight)
         {
-
-            node.used = true;
-            node.down = new Node { x = node.x, y = node.y + eheight, width = node.width, height = node.height - eheight };
-            node.right = new Node { x = node.x + ewidth, y = node.y, width = node.width - ewidth, height = eheight };
-            return node;
+            thisNode.used = true;
+            thisNode.down = new Node { x = thisNode.x, y = thisNode.y + eheight, width = thisNode.width, height = thisNode.height - eheight };
+            thisNode.right = new Node { x = thisNode.x + ewidth, y = thisNode.y, width = thisNode.width - ewidth, height = eheight };
+            return thisNode;
         }
 
-        private Node GrowNode(double width, double height)
+        private Node Grow(double width, double height)
         {
-            bool canGrowDown = (height <= rootNode.height);
-            bool canGrowRight = (width <= rootNode.width);
+            bool goDown = (height <= rootNode.height);
+            bool goRight = (width <= rootNode.width);
 
-            bool shouldGrowRight = canGrowRight && (rootNode.width >= (rootNode.width + width));
-            bool shouldGrowDown = canGrowDown && (rootNode.height >= (rootNode.height + height));
+            bool mustGoRight = goRight && (rootNode.width >= (rootNode.width + width));
+            bool mustGoDown = goDown && (rootNode.height >= (rootNode.height + height));
 
-            if (shouldGrowRight)
+            if (mustGoRight)
             {
 
-                return growRight(width, height);
+                return GoRight(width, height);
             }
-            else if (shouldGrowDown)
+            else if (mustGoDown)
             {
 
-                return growDown(width, height);
+                return GoDown(width, height);
             }
-            else if (canGrowRight)
+            else if (goRight)
             {
 
-                return growRight(width, height);
+                return GoRight(width, height);
             }
-            else if (canGrowDown)
+            else if (goDown)
             {
 
-                return growDown(width, height);
+                return GoDown(width, height);
             }
             else
             {
@@ -143,7 +142,7 @@ namespace ElementPackageTask
             }
         }
 
-        private Node growRight(double width, double height)
+        private Node GoRight(double width, double height)
         {
             rootNode = new Node()
             {
@@ -156,10 +155,10 @@ namespace ElementPackageTask
                 right = new Node() { x = rootNode.width, y = 0, width = width, height = rootNode.height }
             };
 
-            Node node = FindNode(rootNode, width, height);
+            Node node = SearchForNode(rootNode, width, height);
             if (node != null)
             {
-                return SplitNode(node, width, height);
+                return GetSpace(node, width, height);
             }
             else
             {
@@ -167,7 +166,7 @@ namespace ElementPackageTask
             }
         }
 
-        private Node growDown(double width, double height)
+        private Node GoDown(double width, double height)
         {
             rootNode = new Node()
             {
@@ -179,10 +178,10 @@ namespace ElementPackageTask
                 down = new Node() { x = 0, y = rootNode.height, width = rootNode.width, height = height },
                 right = rootNode
             };
-            Node node = FindNode(rootNode, width, height);
+            Node node = SearchForNode(rootNode, width, height);
             if (node != null)
             {
-                return SplitNode(node, width, height);
+                return GetSpace(node, width, height);
             }
             else
             {

@@ -23,8 +23,8 @@ namespace ElementPackageTask
         private int NumOfSpecies = 30; // Default
         private int MaxNumOfGenerations = 2; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
         private int Mutation = 100; // Default процент мутации
-        private double PCBWidth = 200; // Default ширина платы
-        private double PCBHeight = 260; // Default высота платы
+        private double PCBWidth = 370; // Default ширина платы
+        private double PCBHeight = 370; // Default высота платы
         private int k; //Кол-во поколений, на котором работа программы останавливается
         Package package;
         Fitness fitness = new Fitness();

@@ -32,6 +32,8 @@ namespace ElementPackageTask
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.ProgramResultLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Save_btn = new System.Windows.Forms.Button();
+            this.Save = new System.Windows.Forms.Label();
             this.MutationPercent = new System.Windows.Forms.TextBox();
             this.MutationLabel = new System.Windows.Forms.Label();
             this.NumOfGenerationsl = new System.Windows.Forms.Label();
@@ -50,8 +52,6 @@ namespace ElementPackageTask
             this.folderBrowserDialogXY = new System.Windows.Forms.FolderBrowserDialog();
             this.openSizeFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openAdjacencyFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.Save = new System.Windows.Forms.Label();
-            this.Save_btn = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -64,7 +64,6 @@ namespace ElementPackageTask
             // 
             this.splitContainer1.AllowDrop = true;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -92,8 +91,8 @@ namespace ElementPackageTask
             this.splitContainer1.Panel2.Controls.Add(this.ElementSize);
             this.splitContainer1.Panel2.Controls.Add(this.ElementSize_btn);
             this.splitContainer1.Panel2.Controls.Add(this.Start_btn);
-            this.splitContainer1.Size = new System.Drawing.Size(1111, 692);
-            this.splitContainer1.SplitterDistance = 792;
+            this.splitContainer1.Size = new System.Drawing.Size(743, 692);
+            this.splitContainer1.SplitterDistance = 442;
             this.splitContainer1.TabIndex = 0;
             // 
             // ProgramResultLabel
@@ -109,10 +108,29 @@ namespace ElementPackageTask
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(789, 522);
+            this.pictureBox1.Size = new System.Drawing.Size(438, 522);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // Save_btn
+            // 
+            this.Save_btn.Location = new System.Drawing.Point(194, 489);
+            this.Save_btn.Name = "Save_btn";
+            this.Save_btn.Size = new System.Drawing.Size(81, 33);
+            this.Save_btn.TabIndex = 15;
+            this.Save_btn.Text = "Browse";
+            this.Save_btn.UseVisualStyleBackColor = true;
+            this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
+            // 
+            // Save
+            // 
+            this.Save.Location = new System.Drawing.Point(10, 489);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(146, 33);
+            this.Save.TabIndex = 14;
+            this.Save.Text = "Выберите путь сохранения файла";
+            this.Save.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MutationPercent
             // 
@@ -201,7 +219,7 @@ namespace ElementPackageTask
             // 
             // Adjacency_btn
             // 
-            this.Adjacency_btn.Location = new System.Drawing.Point(222, 563);
+            this.Adjacency_btn.Location = new System.Drawing.Point(194, 563);
             this.Adjacency_btn.Name = "Adjacency_btn";
             this.Adjacency_btn.Size = new System.Drawing.Size(81, 33);
             this.Adjacency_btn.TabIndex = 4;
@@ -211,7 +229,7 @@ namespace ElementPackageTask
             // 
             // Adjacency
             // 
-            this.Adjacency.Location = new System.Drawing.Point(51, 563);
+            this.Adjacency.Location = new System.Drawing.Point(10, 563);
             this.Adjacency.Name = "Adjacency";
             this.Adjacency.Size = new System.Drawing.Size(146, 33);
             this.Adjacency.TabIndex = 3;
@@ -220,7 +238,7 @@ namespace ElementPackageTask
             // 
             // ElementSize
             // 
-            this.ElementSize.Location = new System.Drawing.Point(48, 602);
+            this.ElementSize.Location = new System.Drawing.Point(10, 602);
             this.ElementSize.Name = "ElementSize";
             this.ElementSize.Size = new System.Drawing.Size(149, 33);
             this.ElementSize.TabIndex = 2;
@@ -229,7 +247,7 @@ namespace ElementPackageTask
             // 
             // ElementSize_btn
             // 
-            this.ElementSize_btn.Location = new System.Drawing.Point(222, 602);
+            this.ElementSize_btn.Location = new System.Drawing.Point(194, 602);
             this.ElementSize_btn.Name = "ElementSize_btn";
             this.ElementSize_btn.Size = new System.Drawing.Size(81, 33);
             this.ElementSize_btn.TabIndex = 1;
@@ -239,7 +257,7 @@ namespace ElementPackageTask
             // 
             // Start_btn
             // 
-            this.Start_btn.Location = new System.Drawing.Point(122, 643);
+            this.Start_btn.Location = new System.Drawing.Point(118, 657);
             this.Start_btn.Name = "Start_btn";
             this.Start_btn.Size = new System.Drawing.Size(75, 23);
             this.Start_btn.TabIndex = 0;
@@ -255,30 +273,11 @@ namespace ElementPackageTask
             // 
             this.openAdjacencyFileDialog1.FileName = "openFileDialog1";
             // 
-            // Save
-            // 
-            this.Save.Location = new System.Drawing.Point(51, 489);
-            this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(146, 33);
-            this.Save.TabIndex = 14;
-            this.Save.Text = "Выберите путь сохранения файла";
-            this.Save.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Save_btn
-            // 
-            this.Save_btn.Location = new System.Drawing.Point(222, 489);
-            this.Save_btn.Name = "Save_btn";
-            this.Save_btn.Size = new System.Drawing.Size(81, 33);
-            this.Save_btn.TabIndex = 15;
-            this.Save_btn.Text = "Browse";
-            this.Save_btn.UseVisualStyleBackColor = true;
-            this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1111, 692);
+            this.ClientSize = new System.Drawing.Size(743, 692);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
