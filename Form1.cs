@@ -21,10 +21,10 @@ namespace ElementPackageTask
         private double X;
         private double Y;
         private int NumOfSpecies = 30; // Default
-        private int MaxNumOfGenerations = 1; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
+        private int MaxNumOfGenerations = 2; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
         private int Mutation = 100; // Default процент мутации
         private double PCBWidth = 200; // Default ширина платы
-        private double PCBHeight = 300; // Default высота платы
+        private double PCBHeight = 260; // Default высота платы
         private int k; //Кол-во поколений, на котором работа программы останавливается
         Package package;
         Fitness fitness = new Fitness();
@@ -57,10 +57,54 @@ namespace ElementPackageTask
             elementSize = new InitialData(ElementSize.Text);
             FitnessStagnation();
             package = new Package();
-            package.PackageStart(elementSize.Matrix, BestSpecies[BestSpecies.Count-1].Genes, PCBWidth, PCBHeight);
+            if (BestSpecies[BestSpecies.Count - 1].Fitness != double.MaxValue)
+            {
+                package.PackageStart(elementSize.Matrix, BestSpecies[BestSpecies.Count - 1].Genes, PCBWidth, PCBHeight);
+                PrintResult(false);
+            }
+            else
+            {
+                List<Chromosome> BestSpecies1 = new List<Chromosome>();
+                BestSpecies1.AddRange(BestSpecies);
+                BestSpecies1.OrderBy(x => x.Fitness).ToList();
+                package.PackageStart(elementSize.Matrix, BestSpecies1[0].Genes, PCBWidth, PCBHeight);
+                PrintResult(true);
+            }
+            
             DrawElements();
             SaveResult();
         }
+
+        private void PrintResult(bool mistake)
+        {
+            if (mistake == false)
+            {
+                for (int i = BestSpecies.Count - 1; i >= BestSpecies.Count - MaxNumOfGenerations; i--)
+                {
+                    ProgramResultLabel.Text += "\n";
+                    foreach (var gene in BestSpecies[BestSpecies.Count - 1].Genes)
+                    {
+                        ProgramResultLabel.Text += gene;
+                        ProgramResultLabel.Text += " ";
+                    }
+                    ProgramResultLabel.Text += "\t FITNESS = ";
+                    ProgramResultLabel.Text += BestSpecies[i].Fitness;
+                }
+            }
+            else
+            { 
+                            
+                foreach (var gene in BestSpecies[0].Genes)
+                {
+                    ProgramResultLabel.Text += gene;
+                    ProgramResultLabel.Text += " ";
+                }
+                ProgramResultLabel.Text += "\t FITNESS = ";
+                ProgramResultLabel.Text += BestSpecies[0].Fitness;
+                
+            }
+            
+        } //Печать результата
 
         void FitnessStagnation() //Неизменность F на протяжении опр-го числа поколений
         {
@@ -127,17 +171,7 @@ namespace ElementPackageTask
 
             }
             //BestSpecies = BestSpecies.OrderBy(x => x.Fitness).ToList();
-            for (int i = BestSpecies.Count - 1; i >= BestSpecies.Count - MaxNumOfGenerations; i--)
-            {
-                ProgramResultLabel.Text += "\n";
-                foreach (var gene in BestSpecies[BestSpecies.Count - 1].Genes)
-                {
-                    ProgramResultLabel.Text += gene;
-                    ProgramResultLabel.Text += " ";
-                }
-                ProgramResultLabel.Text += "\t FITNESS = ";
-                ProgramResultLabel.Text += BestSpecies[i].Fitness;
-            }
+            
 
 
 
@@ -164,6 +198,20 @@ namespace ElementPackageTask
                 package = new Package();
                 package.PackageStart(elementSize.Matrix, item.Genes, PCBWidth, PCBHeight);
                 item.Fitness = fitness.Count(package.ElementsExtra, adjacencyExtra.Matrix);
+                bool mistake = false;
+
+                foreach (var item1 in package.ElementsExtra)
+                {
+                    if (((item1.position.x + item1.width) > PCBWidth) || ((item1.position.y + item1.height) > PCBHeight))
+                    {
+                        mistake = true;
+                    }
+                }
+
+                if (mistake == true)
+                {
+                    item.Fitness = double.MaxValue;
+                }
             }
         } //Метод, создающий новое поколение (без генерации начального поколения)
 
