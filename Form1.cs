@@ -21,7 +21,7 @@ namespace ElementPackageTask
         private double Y;
         public int NumOfSpecies = 5; // Default
         public int MaxNumOfGenerations = 1; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
-        public int Mutation = 50; // Default процент мутации
+        public int Mutation = 100; // Default процент мутации
         public double PCBWidth = 150; // Default ширина платы
         public double PCBHeight = 350; // Default высота платы
         int k; //Кол-во поколений, на котором работа программы останавливается
@@ -149,7 +149,7 @@ namespace ElementPackageTask
             ListOfOffspringSpecies = new List<Chromosome>();
             ListOfOffspringSpeciesMutated = new List<Chromosome>();
             ListOfOffspringSpecies = population.Crossover(elementSize.Matrix.Length/2, ListOfparentalSpecies, ListOfOffspringSpecies);
-            ListOfOffspringSpeciesMutated = population.Mutation(elementSize.Matrix.Length / 2, ListOfOffspringSpecies, ListOfOffspringSpeciesMutated, 50);
+            ListOfOffspringSpeciesMutated = population.Mutation(elementSize.Matrix.Length / 2, ListOfOffspringSpecies, ListOfOffspringSpeciesMutated, Mutation);
             ListOfSpeciesUNITED = new List<Chromosome>();
             ListOfSpeciesUNITED.AddRange(ListOfparentalSpecies);
             ListOfSpeciesUNITED.AddRange(ListOfOffspringSpeciesMutated);
@@ -168,7 +168,7 @@ namespace ElementPackageTask
             bitmapForElements = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Image = bitmapForElements;
             graphics = Graphics.FromImage(pictureBox1.Image);
-
+            graphics.DrawRectangle(pen, 0, 0, (float)PCBWidth, (float)PCBHeight);
             foreach (var item in package.Elements)
             {
                 colorForElement = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));

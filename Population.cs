@@ -100,6 +100,10 @@ namespace ElementPackageTask
             {
                 int a = random.Next(0, numOfElements);
                 int b = random.Next(a + 1, numOfElements);
+                if (b - a < 2)
+                {
+                    b = random.Next(a + 1, numOfElements);
+                }
                 int mut = Convert.ToInt32(Math.Round((b - a) * percentOfMutation / 100));
                 arr = new int[mut];
                 Array.Copy(offspring.Genes, a, arr, 0, arr.Length);
