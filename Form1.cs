@@ -48,7 +48,7 @@ namespace ElementPackageTask
         public List<Chromosome> ListOfSpeciesUNITED;
         public List<Chromosome> ListOfSpeciesSORTED = new List<Chromosome>();
         public List<Chromosome> BestSpecies = new List<Chromosome>();
-        public List<Chromosome> BestSpecies1 = new List<Chromosome>();
+        private List<Chromosome> BestSpecies1 = new List<Chromosome>();
 
 
 
