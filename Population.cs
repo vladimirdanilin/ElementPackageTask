@@ -41,27 +41,27 @@ namespace ElementPackageTask
 
         public List<Chromosome> Crossover(int numOfElements, List<Chromosome> listOfParentalSpecies, List<Chromosome> listOfOffspringSpecies)
         {
-            int[] mother = new int[numOfElements];
-            int[] father = new int[numOfElements];
+            int[] female = new int[numOfElements];
+            int[] male = new int[numOfElements];
             int[] offspring1 = new int[numOfElements];
             int[] offspring2 = new int[numOfElements];
             for (int i = 0; i < NumOfSpecies / 2; i++)
-            { //Сначала ищется особь с индексом m, затем особь с индексом f, причем m!=f
-                int m = random.Next(0, listOfParentalSpecies.Count);
+            { 
                 int f = random.Next(0, listOfParentalSpecies.Count);
+                int m = random.Next(0, listOfParentalSpecies.Count);
                 while (f == m)
                 {
                     f = random.Next(0, listOfParentalSpecies.Count);
                 }
-                mother = listOfParentalSpecies.ElementAt(m).Genes;
-                father = listOfParentalSpecies.ElementAt(f).Genes;
-                offspring1 = Breeding(mother, father, numOfElements);
-                offspring2 = Breeding(father, mother, numOfElements);
+                female = listOfParentalSpecies.ElementAt(f).Genes;
+                male = listOfParentalSpecies.ElementAt(m).Genes;
+                offspring1 = Breeding(female, male, numOfElements);
+                offspring2 = Breeding(male, female, numOfElements);
 
-                Chromosome person1 = new Chromosome(offspring1, 0);
-                Chromosome person2 = new Chromosome(offspring2, 0);
-                listOfOffspringSpecies.Add(person1);
-                listOfOffspringSpecies.Add(person2);
+                Chromosome chromosome1 = new Chromosome(offspring1, 0);
+                Chromosome chromosome2 = new Chromosome(offspring2, 0);
+                listOfOffspringSpecies.Add(chromosome1);
+                listOfOffspringSpecies.Add(chromosome2);
             }
             return listOfOffspringSpecies;
 

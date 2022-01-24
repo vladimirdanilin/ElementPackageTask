@@ -20,7 +20,7 @@ namespace ElementPackageTask
         }
         private double X;
         private double Y;
-        private int NumOfSpecies = 30; // Default
+        private int NumOfSpecies = 50; // Default
         private int MaxNumOfGenerations = 2; //Default кол-во поколений, на протяжении которого значение функции пригодности неизменно
         private int Mutation = 100; // Default процент мутации
         private double PCBWidth = 370; // Default ширина платы
@@ -48,6 +48,7 @@ namespace ElementPackageTask
         public List<Chromosome> ListOfSpeciesUNITED;
         public List<Chromosome> ListOfSpeciesSORTED = new List<Chromosome>();
         public List<Chromosome> BestSpecies = new List<Chromosome>();
+        public List<Chromosome> BestSpecies1 = new List<Chromosome>();
 
 
 
@@ -64,7 +65,7 @@ namespace ElementPackageTask
             }
             else
             {
-                List<Chromosome> BestSpecies1 = new List<Chromosome>();
+                //List<Chromosome> BestSpecies1 = new List<Chromosome>();
                 BestSpecies1.AddRange(BestSpecies);
                 BestSpecies1.OrderBy(x => x.Fitness).ToList();
                 package.PackageStart(elementSize.Matrix, BestSpecies1[0].Genes, PCBWidth, PCBHeight);
@@ -92,15 +93,22 @@ namespace ElementPackageTask
                 }
             }
             else
-            { 
-                            
-                foreach (var gene in BestSpecies[0].Genes)
+            {
+                if (BestSpecies1[0].Fitness != double.MaxValue)
                 {
-                    ProgramResultLabel.Text += gene;
-                    ProgramResultLabel.Text += " ";
+                    foreach (var gene in BestSpecies1[0].Genes)
+                    {
+                        ProgramResultLabel.Text += gene;
+                        ProgramResultLabel.Text += " ";
+                    }
+                    ProgramResultLabel.Text += "\t FITNESS = ";
+                    ProgramResultLabel.Text += BestSpecies1[0].Fitness;
                 }
-                ProgramResultLabel.Text += "\t FITNESS = ";
-                ProgramResultLabel.Text += BestSpecies[0].Fitness;
+                else
+                {
+                    ProgramResultLabel.Text = "Измените размеры PCB";
+                }
+                
                 
             }
             
@@ -132,24 +140,16 @@ namespace ElementPackageTask
                 ListOfSpeciesSORTED.RemoveRange(r, m);
                 PrintListOfSpecies(BestSpecies, "BEST SPECIES");
 
-                bool Exists = false;
-                foreach (var item in BestSpecies)
-                {
-                    if (item.Genes == ListOfSpeciesSORTED[0].Genes)
-                    {
-                        Exists = true;   
-                    }
-                }
-                if (Exists == false)
-                {
+                //if (ListOfSpeciesSORTED[0].Fitness != double.MaxValue)
+                //{
                     BestSpecies.Add(ListOfSpeciesSORTED[0]);
-                }
+                //}
 
                 if (BestSpecies.Count >= MaxNumOfGenerations)
                 {
                     for (int i = BestSpecies.Count - 1; i >= BestSpecies.Count-MaxNumOfGenerations; i--)
                     {
-                        if (BestSpecies[i].Fitness == BestSpecies[BestSpecies.Count - 1].Fitness)
+                        if ((BestSpecies[i].Fitness == BestSpecies[BestSpecies.Count - 1].Fitness)/*&&(BestSpecies[i].Fitness != double.MaxValue)*/)
                         {
                             n++;
                         }
@@ -170,8 +170,7 @@ namespace ElementPackageTask
 
 
             }
-            //BestSpecies = BestSpecies.OrderBy(x => x.Fitness).ToList();
-            
+         
 
 
 
