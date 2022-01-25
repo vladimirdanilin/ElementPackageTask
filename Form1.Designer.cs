@@ -32,6 +32,7 @@ namespace ElementPackageTask
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.ProgramResultLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.RestartBtn = new System.Windows.Forms.Button();
             this.Save_btn = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.Label();
             this.MutationPercent = new System.Windows.Forms.TextBox();
@@ -74,6 +75,7 @@ namespace ElementPackageTask
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.RestartBtn);
             this.splitContainer1.Panel2.Controls.Add(this.Save_btn);
             this.splitContainer1.Panel2.Controls.Add(this.Save);
             this.splitContainer1.Panel2.Controls.Add(this.MutationPercent);
@@ -98,7 +100,7 @@ namespace ElementPackageTask
             // ProgramResultLabel
             // 
             this.ProgramResultLabel.AutoSize = true;
-            this.ProgramResultLabel.Location = new System.Drawing.Point(26, 602);
+            this.ProgramResultLabel.Location = new System.Drawing.Point(12, 525);
             this.ProgramResultLabel.Name = "ProgramResultLabel";
             this.ProgramResultLabel.Size = new System.Drawing.Size(0, 13);
             this.ProgramResultLabel.TabIndex = 1;
@@ -112,6 +114,16 @@ namespace ElementPackageTask
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // RestartBtn
+            // 
+            this.RestartBtn.Location = new System.Drawing.Point(13, 641);
+            this.RestartBtn.Name = "RestartBtn";
+            this.RestartBtn.Size = new System.Drawing.Size(89, 39);
+            this.RestartBtn.TabIndex = 16;
+            this.RestartBtn.Text = "Restart";
+            this.RestartBtn.UseVisualStyleBackColor = true;
+            this.RestartBtn.Click += new System.EventHandler(this.RestartBtn_Click);
             // 
             // Save_btn
             // 
@@ -257,9 +269,9 @@ namespace ElementPackageTask
             // 
             // Start_btn
             // 
-            this.Start_btn.Location = new System.Drawing.Point(118, 657);
+            this.Start_btn.Location = new System.Drawing.Point(194, 641);
             this.Start_btn.Name = "Start_btn";
-            this.Start_btn.Size = new System.Drawing.Size(75, 23);
+            this.Start_btn.Size = new System.Drawing.Size(81, 39);
             this.Start_btn.TabIndex = 0;
             this.Start_btn.Text = "Start";
             this.Start_btn.UseVisualStyleBackColor = true;
@@ -318,5 +330,6 @@ namespace ElementPackageTask
         private System.Windows.Forms.Button Save_btn;
         private System.Windows.Forms.Label Save;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button RestartBtn;
     }
 }

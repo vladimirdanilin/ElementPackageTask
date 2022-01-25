@@ -80,17 +80,18 @@ namespace ElementPackageTask
         {
             if (mistake == false)
             {
-                for (int i = BestSpecies.Count - 1; i >= BestSpecies.Count - MaxNumOfGenerations; i--)
-                {
+                //for (int i = BestSpecies.Count - 1; i >= BestSpecies.Count - MaxNumOfGenerations; i--)
+                //{
                     ProgramResultLabel.Text += "\n";
                     foreach (var gene in BestSpecies[BestSpecies.Count - 1].Genes)
                     {
                         ProgramResultLabel.Text += gene;
-                        ProgramResultLabel.Text += " ";
+                        ProgramResultLabel.Text += " \t";
                     }
-                    ProgramResultLabel.Text += "\t FITNESS = ";
-                    ProgramResultLabel.Text += BestSpecies[i].Fitness;
-                }
+                    ProgramResultLabel.Text += "\t \t FITNESS = ";
+                    //ProgramResultLabel.Text += BestSpecies[i].Fitness;
+                    ProgramResultLabel.Text += BestSpecies[BestSpecies.Count - 1].Fitness;
+                //}
             }
             else
             {
@@ -182,7 +183,7 @@ namespace ElementPackageTask
             if (ListOfOffspringSpecies != null)
             {
                 ListOfparentalSpecies.RemoveRange(0, ListOfparentalSpecies.Count);
-                ListOfparentalSpecies.AddRange(ListOfOffspringSpeciesMutated);
+                ListOfparentalSpecies.AddRange(ListOfSpeciesSORTED);
             }
             ListOfOffspringSpecies = new List<Chromosome>();
             ListOfOffspringSpeciesMutated = new List<Chromosome>();
@@ -383,5 +384,10 @@ namespace ElementPackageTask
                 }
             }
         } //Сохранение 
+
+        private void RestartBtn_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
     }
 }

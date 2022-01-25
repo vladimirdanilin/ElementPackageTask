@@ -71,7 +71,7 @@ namespace ElementPackageTask
                 }
                 else
                 {
-                    element.position = Grow(element.width, element.height);
+                    element.position = new Node { x = containerWidth + 10, y = containerHeight + 10 };
                 }
             }
         }
@@ -107,95 +107,14 @@ namespace ElementPackageTask
             return thisNode;
         }
 
-        private Node Grow(double width, double height)
-        {
-            bool goDown = (height <= rootNode.height);
-            bool goRight = (width <= rootNode.width);
-
-            bool mustGoRight = goRight && (rootNode.width >= (rootNode.width + width));
-            bool mustGoDown = goDown && (rootNode.height >= (rootNode.height + height));
-
-            if (mustGoRight)
-            {
-
-                return GoRight(width, height);
-            }
-            else if (mustGoDown)
-            {
-
-                return GoDown(width, height);
-            }
-            else if (goRight)
-            {
-
-                return GoRight(width, height);
-            }
-            else if (goDown)
-            {
-
-                return GoDown(width, height);
-            }
-            else
-            {
-
-                return null;
-            }
-        }
-
-        private Node GoRight(double width, double height)
-        {
-            rootNode = new Node()
-            {
-                used = true,
-                x = 0,
-                y = 0,
-                width = rootNode.width + width,
-                height = rootNode.height,
-                down = rootNode,
-                right = new Node() { x = rootNode.width, y = 0, width = width, height = rootNode.height }
-            };
-
-            Node node = SearchForNode(rootNode, width, height);
-            if (node != null)
-            {
-                return GetSpace(node, width, height);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private Node GoDown(double width, double height)
-        {
-            rootNode = new Node()
-            {
-                used = true,
-                x = 0,
-                y = 0,
-                width = rootNode.width,
-                height = rootNode.height + height,
-                down = new Node() { x = 0, y = rootNode.height, width = rootNode.width, height = height },
-                right = rootNode
-            };
-            Node node = SearchForNode(rootNode, width, height);
-            if (node != null)
-            {
-                return GetSpace(node, width, height);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public void PrintList(List<Element> list, string text)
+        
+        /*public void PrintList(List<Element> list, string text)
         {
             Console.WriteLine(text);
             foreach (var item in list)
             {
                 Console.WriteLine($"W = {item.width} H = {item.height} X = {item.position.x} Y = {item.position.y}");
             }
-        }
+        }*/
     }
 }
